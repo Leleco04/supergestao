@@ -37,6 +37,7 @@
                                 <td>{{$produto->descricao}}</td>
                                 <td>{{$produto->peso}}</td>
                                 <td>{{$produto->unidade_id}}</td>
+                                <td><a href="{{route('produto.show', ['produto' => $produto->id])}}">Visualizar</a></td>
                                 <td><a href="">Excluir</a></td>
                                 {{-- Ao clicar em editar, o usuário é redirecionado a rota editar com o id do fornecedor como parâmetro --}}
                                 <td><a href="">Editar</a></td>
