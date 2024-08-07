@@ -12,6 +12,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\ProdutoDetalheController;
 
 // Rota usando os controllers e suas classes / name = nome da rota
 Route::get('/', [PrincipalController::class, 'principal'])->name('site.index');
@@ -52,6 +53,7 @@ Route::middleware('autenticacao:padrao,visitante')->prefix('/app')->group(functi
     ->name('app.fornecedor.excluir');
 
     Route::resource('produto', App\Http\Controllers\ProdutoController::class);
+    Route::resource('produto-detalhe', App\Http\Controllers\ProdutoDetalheController::class);
 
     Route::get('/home', [HomeController::class, 'index'])
     ->name('app.home');
