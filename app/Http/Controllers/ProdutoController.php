@@ -13,6 +13,9 @@ class ProdutoController extends Controller
      */
     public function index(Request $request)
     {
+        // Faz uma busca por categoria
+        // $produto = Produto::where('unidade_id', 1)->paginate();
+
         $produtos = Produto::paginate(10);
 
         return view('app.produto.index', ['produtos' => $produtos, 'request' => $request->all()]);
