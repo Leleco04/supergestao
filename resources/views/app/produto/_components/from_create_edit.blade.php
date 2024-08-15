@@ -2,10 +2,18 @@
     <form action="{{ route('produto.update', ['produto' => $produto->id]) }}" method="POST">
         @csrf
         @method('PUT')
-@else
-    <form action="{{ route('produto.store') }}" method="POST">
-        @csrf
+    @else
+        <form action="{{ route('produto.store') }}" method="POST">
+            @csrf
 @endif
+
+<select name="fornecedor_id">
+    <option>-- Selecione um Fornecedor --</option>
+    @foreach ($fornecedores as $fornecedor)
+        <option value="{{ $fornecedor->id }}">{{ $fornecedor->nome }}</option>
+    @endforeach
+</select>
+
 {{-- Em $fornecedor->nome ?? old('nome'), é verificado se $fornecedor tem um nome e é exibido (vem de editar), se não, o old é exibido --}}
 <input type="text" name="nome" placeholder="Nome" class="borda-preta" value="{{ $produto->nome ?? old('nome') }}">
 {{ $errors->has('nome') ? $errors->first('nome') : '' }}
@@ -22,6 +30,6 @@
 </select>
 {{ $errors->has('unidade_id') ? $errors->first('unidade_id') : '' }}
 
-    <button type="submit" class="borda-preta">Cadastrar Produto</button>
+<button type="submit" class="borda-preta">Cadastrar Produto</button>
 
 </form>

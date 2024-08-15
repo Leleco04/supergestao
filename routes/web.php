@@ -29,36 +29,38 @@ Route::post('/login', [LoginController::class, 'autenticar'])->name('site.login'
 // Agrupa as rotas utilizando o ::prefix -> group, ou seja, para acessar alguma rota é preciso colocar "/app" antes, (/app/clientes)
 Route::middleware('autenticacao:padrao,visitante')->prefix('/app')->group(function () {
 
-    Route::get('/cliente', [ClienteController::class, 'index']
-    )->name('app.cliente');
+    Route::get('/fornecedor', [FornecedorController::class, 'index'])
+        ->name('app.fornecedor');
 
     Route::get('/fornecedor', [FornecedorController::class, 'index'])
-    ->name('app.fornecedor');
-
-    Route::get('/fornecedor', [FornecedorController::class, 'index'])
-    ->name('app.fornecedor');
+        ->name('app.fornecedor');
 
     Route::get('/fornecedor/adicionar', [FornecedorController::class, 'adicionar'])
-    ->name('app.fornecedor.adicionar');
+        ->name('app.fornecedor.adicionar');
     Route::post('/fornecedor/adicionar', [FornecedorController::class, 'adicionar'])
-    ->name('app.fornecedor.adicionar');
+        ->name('app.fornecedor.adicionar');
 
     Route::get('/fornecedor/listar', [FornecedorController::class, 'listar'])
-    ->name('app.fornecedor.listar');
+        ->name('app.fornecedor.listar');
     Route::post('/fornecedor/listar', [FornecedorController::class, 'listar'])
-    ->name('app.fornecedor.listar');
+        ->name('app.fornecedor.listar');
     Route::get('/fornecedor/editar/{id}/{msg?}', [FornecedorController::class, 'editar'])
-    ->name('app.fornecedor.editar');
+        ->name('app.fornecedor.editar');
     Route::get('/fornecedor/excluir/{id}', [FornecedorController::class, 'excluir'])
-    ->name('app.fornecedor.excluir');
+        ->name('app.fornecedor.excluir');
 
     Route::resource('produto', App\Http\Controllers\ProdutoController::class);
     Route::resource('produto-detalhe', App\Http\Controllers\ProdutoDetalheController::class);
+    Route::resource('cliente', App\Http\Controllers\ClienteController::class);
+    Route::resource('pedido', App\Http\Controllers\PedidoController::class);
+    Route::resource('pedido-produto', App\Http\Controllers\PedidoProdutoController::class);
 
     Route::get('/home', [HomeController::class, 'index'])
-    ->name('app.home');
-    
-    Route::get('/sair', [LoginController::class, 'sair']
+        ->name('app.home');
+
+    Route::get(
+        '/sair',
+        [LoginController::class, 'sair']
     )->name('app.sair');
 });
 

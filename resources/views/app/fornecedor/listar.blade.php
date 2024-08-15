@@ -33,19 +33,40 @@
                         {{-- Cria as colunas da tabela de acordo com as informações de fornecedores --}}
                         @foreach ($fornecedores as $fornecedor)
                             <tr>
-                                <td>{{$fornecedor->nome}}</td>
-                                <td>{{$fornecedor->site}}</td>
-                                <td>{{$fornecedor->uf}}</td>
-                                <td>{{$fornecedor->email}}</td>
-                                <td><a href="{{route('app.fornecedor.excluir', $fornecedor->id)}}">Excluir</a></td>
+                                <td>{{ $fornecedor->nome }}</td>
+                                <td>{{ $fornecedor->site }}</td>
+                                <td>{{ $fornecedor->uf }}</td>
+                                <td>{{ $fornecedor->email }}</td>
+                                <td><a href="{{ route('app.fornecedor.excluir', $fornecedor->id) }}">Excluir</a></td>
                                 {{-- Ao clicar em editar, o usuário é redirecionado a rota editar com o id do fornecedor como parâmetro --}}
-                                <td><a href="{{route('app.fornecedor.editar', $fornecedor->id)}}">Editar</a></td>
+                                <td><a href="{{ route('app.fornecedor.editar', $fornecedor->id) }}">Editar</a></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    <p>Lista de produtos</p>
+                                    <table border="1" style="margin: 20px;">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Nome</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($fornecedor->produtos as $key => $produto)
+                                                <tr>
+                                                    <td>{{ $produto->id }}</td>
+                                                    <td>{{ $produto->nome }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
                 {{-- Usa o request que foi passado através da return view e faz a busca pelo array --}}
-                {{$fornecedores->appends($request)->links()}}
+                {{ $fornecedores->appends($request)->links() }}
             </div>
         </div>
 

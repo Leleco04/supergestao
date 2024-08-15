@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Produto;
 use App\Models\Unidade;
 use App\Models\ProdutoDetalhe;
+use App\Models\Item;
+use App\Models\Fornecedor;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -17,16 +19,7 @@ class ProdutoController extends Controller
         // Faz uma busca por categoria
         // $produto = Produto::where('unidade_id', 1)->paginate();
 
-        $produtos = Produto::paginate(10);
-
-        foreach($produtos as $key => $produto) {
-            $produtoDetalhe = ProdutoDetalhe::where('produto_id', $produto->id)->first();
-            if(isset($produtoDetalhe)) {
-                $produtos[$key]['comprimento'] = $produtoDetalhe->comprimento;
-                $produtos[$key]['largura'] = $produtoDetalhe->largura;
-                $produtos[$key]['altura'] = $produtoDetalhe->altura;
-            }
-        }
+        $produtos = Item::paginate(10);
 
         return view('app.produto.index', ['produtos' => $produtos, 'request' => $request->all()]);
     }
@@ -36,8 +29,9 @@ class ProdutoController extends Controller
      */
     public function create()
     {
+        $fornecedores = Fornecedor::all();
         $unidades = Unidade::all();
-        return view('app.produto.create', ['unidades' => $unidades]);
+        return view('app.produto.create', ['unidades' => $unidades, 'fornecedores' => $fornecedores]);
     }
 
     /**
@@ -47,11 +41,11 @@ class ProdutoController extends Controller
     {
 
         $regras = [
-           'nome' => 'required|min:3|max:40',
-           'descricao' => 'required|min:3|max:2000',
-           'peso' => 'required|integer',
-           // => Verifica se existe, com os parâmetros "tabela" e "campo"
-           'unidade_id' => 'exists:unidades,id'
+            'nome' => 'required|min:3|max:40',
+            'descricao' => 'required|min:3|max:2000',
+            'peso' => 'required|integer',
+            // => Verifica se existe, com os parâmetros "tabela" e "campo"
+            'unidade_id' => 'exists:unidades,id'
         ];
 
         $feedback = [
@@ -75,7 +69,7 @@ class ProdutoController extends Controller
      */
     public function show(Produto $produto)
     {
-        return view ('app.produto.show', ['produto' => $produto]);
+        return view('app.produto.show', ['produto' => $produto]);
     }
 
     /**
@@ -83,8 +77,9 @@ class ProdutoController extends Controller
      */
     public function edit(Produto $produto)
     {
+        $fornecedores = Fornecedor::all();
         $unidades = Unidade::all();
-        return view('app.produto.edit', ['produto' => $produto, 'unidades' => $unidades]);
+        return view('app.produto.edit', ['produto' => $produto, 'unidades' => $unidades, 'fornecedores' => $fornecedores]);
     }
 
     /**
